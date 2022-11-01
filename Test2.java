@@ -7,7 +7,6 @@ import java.util.Map;
 
 public class Test2 {
 	public static void main(String[] args) {
-		// System.out.println(getStudentData());
 		List<Student> studentList = getStudentData();
 		Map<String, List<Student>> mapStudent = getMapOfStudent(studentList);
 	}
@@ -52,6 +51,8 @@ public class Test2 {
 	static int greaterThan50Student = 0;
 	static int lesserthan50Student = 0;
 	static int totalStudent=0;
+	static float allSubjectTotalMarks=0;
+	static int noOfSubject=0;
 
 	private static Map<String, List<Student>> getMapOfStudent(List<Student> studentList) {
 		Map<String, List<Student>> studentMap = new HashMap<String, List<Student>>();
@@ -66,8 +67,10 @@ public class Test2 {
 		
 			
 			int outOfTotalMarks = hindi.getTotalMark() + marathi.getTotalMark() + math.getTotalMark();
+			noOfSubject=outOfTotalMarks/100;
 			float additionOfMarks = hindi.getMark() + marathi.getMark() + math.getMark();
 			float percentage = (additionOfMarks / outOfTotalMarks) * 100;
+			allSubjectTotalMarks=allSubjectTotalMarks+additionOfMarks;
 			totalStudent++;
 	
 
@@ -101,12 +104,13 @@ public class Test2 {
 		System.out.println(greaterThan50Student + " out of "+totalStudent+" students get greater than 50%");
 		System.out.println(lesserthan50Student + " out of "+totalStudent+" students get lesser than 50%");
 		System.out.println("Total Number of Students :" +totalStudent);
-		System.out.println("Total Number of Subjects :");
-		System.out.println("Total Mark Obtained by Students :");
-		System.out.println("Total Subject Mark : 100 × 3 (No. Of Subject) × 10 (Number of Students)");
-		System.out.println("Total Percentage Obtained : (Step 3)÷(Step 4) × 100");
+		System.out.println("Total Number of Subjects :"+noOfSubject);
+		System.out.println("Total Mark Obtained by Students :" +allSubjectTotalMarks);
+		System.out.println("Total Subject Mark :"+( 100 *noOfSubject * totalStudent));
+		System.out.println("Total Percentage Obtained :"+ allSubjectTotalMarks/(noOfSubject * totalStudent)+"%");
 
 		return studentMap;
 	}
+
 
 }
