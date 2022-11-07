@@ -8,9 +8,9 @@ import java.util.Map;
 public class MeritListTest {
 	public static void main(String[] args) {
 		List<Student> studentList = getStudentData();
-		Map<College, List<Student>> admission = getMapOfAdmission(studentList);
+		List<Admission> admission = getMapOfAdmission(studentList);
 	}
-	
+
 	public static List<Student> getStudentData() {
 		List<Student> studentList = new ArrayList<Student>();
 
@@ -21,7 +21,7 @@ public class MeritListTest {
 		Subject marathi1 = new Subject("marathi", 91, 100);
 		Subject hindi1 = new Subject("hindi", 89, 100);
 		Subject math2 = new Subject("math", 95, 100);
-		Subject marathi2 = new Subject("marathi",98, 100);
+		Subject marathi2 = new Subject("marathi", 98, 100);
 		Subject hindi2 = new Subject("hindi", 97, 100);
 		Subject math3 = new Subject("math", 62, 100);
 		Subject marathi3 = new Subject("marathi", 59, 100);
@@ -35,8 +35,7 @@ public class MeritListTest {
 		Subject math6 = new Subject("math", 78, 100);
 		Subject marathi6 = new Subject("marathi", 81, 100);
 		Subject hindi6 = new Subject("hindi", 75, 100);
-		
-		
+
 		Student studentRitesh = new Student(1, "Ritesh", math1, marathi1, hindi1);
 		Student studentPrateek = new Student(2, "Prateek", math, marathi, hindi);
 		Student studentShivanjali = new Student(3, "Shivanjali", math2, marathi2, hindi2);
@@ -53,8 +52,8 @@ public class MeritListTest {
 		studentList.add(studentSumit);
 		studentList.add(studentPooja);
 		return studentList;
-	} 
-	
+	}
+
 	/*
 	 * protected static final List<College> getCollegeData() {
 	 * 
@@ -67,77 +66,93 @@ public class MeritListTest {
 	 * collegeList.add(coep); collegeList.add(dyPatil); collegeList.add(jspm);
 	 * //System.out.println("****************"+collegeList); return collegeList; }
 	 */
-	
+
 	static int greaterThan50Student = 0;
 	static int lesserthan50Student = 0;
-	static int totalStudent=0;
-	static double allSubjectTotalMarks=0;
-	static int noOfSubject=0;
+	static int totalStudent = 0;
+	static double allSubjectTotalMarks = 0;
+	static int noOfSubject = 0;
 
-	private static Map<College, List<Student>> getMapOfAdmission(List<Student> studentList) {
-		Map<College, List<Student>> admission = new HashMap<College, List<Student>>();
+	private static List<Admission>getMapOfAdmission(List<Student> studentList) {
+		//Map<College, List<Student>> admission = new HashMap<College, List<Student>>();
+
+		List<Admission> admission=new ArrayList<Admission>();
+		
 		List<Student> studentsMeritListA = new ArrayList<Student>();
 		List<Student> studentsMeritListB = new ArrayList<Student>();
 		List<Student> studentsMeritListC = new ArrayList<Student>();
 		List<Student> studentsMeritListD = new ArrayList<Student>();
 		List<Student> studentsMeritListE = new ArrayList<Student>();
 		List<Student> studentsMeritListF = new ArrayList<Student>();
-		
-		College coep=new College("COEP","Pune",95);
-		College dyPatil=new College("DyPatil","Pune",85);
-		College jspm=new College("JSPM","Pune",75);
-		College raisoni=new College("Raisoni","Pune",65);
-		College otherCollege=new College("OtherCollege","Pune",35);
-		College notEligible=new College("NotEligibelForAdmission",null,0);
+
+		College coep = new College("COEP", "Pune", 95);
+		College dyPatil = new College("DyPatil", "Pune", 85);
+		College jspm = new College("JSPM", "Pune", 75);
+		College raisoni = new College("Raisoni", "Pune", 65);
+		College otherCollege = new College("OtherCollege", "Pune", 35);
+		College notEligible = new College("NotEligibelForAdmission", null, 0);
+
+		Admission admission1 = new Admission(coep, studentsMeritListA);
+		Admission admission2 = new Admission(dyPatil, studentsMeritListB);
+		Admission admission3 = new Admission(jspm, studentsMeritListC);
+		Admission admission4 = new Admission(raisoni, studentsMeritListD);
+		Admission admission5 = new Admission(otherCollege, studentsMeritListE);
+		Admission admission6 = new Admission(notEligible, studentsMeritListF);
 
 		for (Student student : studentList) {
 			Subject hindi = student.getHindi();
 			Subject marathi = student.getMarathi();
 			Subject math = student.getMath();
-		
-			
+
 			int outOfTotalMarks = hindi.getTotalMark() + marathi.getTotalMark() + math.getTotalMark();
-			noOfSubject=outOfTotalMarks/100;
+			noOfSubject = outOfTotalMarks / 100;
 			double additionOfMarks = hindi.getMark() + marathi.getMark() + math.getMark();
 			double percentage = (additionOfMarks / outOfTotalMarks) * 100;
-			allSubjectTotalMarks=allSubjectTotalMarks+additionOfMarks;
+			allSubjectTotalMarks = allSubjectTotalMarks + additionOfMarks;
 			totalStudent++;
-			
-			if (percentage>=95.00 && percentage<=100.00) {
+
+			if (percentage >= coep.getMerit() && percentage <= 100.00) {
 				studentsMeritListA.add(student);
-				System.out.println(student.getName()+ ": "+percentage);
-				}
-			if (percentage>=85.00 && percentage<95.00) {
+				System.out.println(student.getName() + ": " + percentage);
+			}
+			if (percentage >= dyPatil.getMerit() && percentage < coep.getMerit()) {
 				studentsMeritListB.add(student);
-				System.out.println(student.getName()+ ": "+percentage);
-				}
-			if (percentage>=75.00 && percentage<85.00) {
+				System.out.println(student.getName() + ": " + percentage);
+			}
+			if (percentage >= jspm.getMerit() && percentage < dyPatil.getMerit()) {
 				studentsMeritListC.add(student);
-				System.out.println(student.getName()+ ": "+percentage);
-				}
-			if (percentage>=65.00 && percentage<75.00) {
+				System.out.println(student.getName() + ": " + percentage);
+			}
+			if (percentage >= raisoni.getMerit() && percentage < jspm.getMerit()) {
 				studentsMeritListD.add(student);
-				System.out.println(student.getName()+ ": "+percentage);
-				}
-			if (percentage>=35.00 && percentage<65.00) {
+				System.out.println(student.getName() + ": " + percentage);
+			}
+			if (percentage >= otherCollege.getMerit() && percentage < raisoni.getMerit()) {
 				studentsMeritListE.add(student);
-				System.out.println(student.getName()+ ": "+percentage);
-				}
-			if (percentage>=0.00 && percentage<35.00) {
+				System.out.println(student.getName() + ": " + percentage);
+			}
+			if (percentage >= notEligible.getMerit() && percentage < otherCollege.getMerit()) {
 				studentsMeritListF.add(student);
-				System.out.println(student.getName()+ ": "+percentage);
-				}
-			admission.put(coep, studentsMeritListA);
-			admission.put(dyPatil, studentsMeritListB);
-			admission.put(jspm, studentsMeritListC);
-			admission.put(raisoni, studentsMeritListD);
-			admission.put(otherCollege, studentsMeritListE);
-			admission.put(notEligible, studentsMeritListF);
-		
+				System.out.println(student.getName() + ": " + percentage);
+			}
+			/*
+			 * admission.put(coep, studentsMeritListA); admission.put(dyPatil,
+			 * studentsMeritListB); admission.put(jspm, studentsMeritListC);
+			 * admission.put(raisoni, studentsMeritListD); admission.put(otherCollege,
+			 * studentsMeritListE); admission.put(notEligible, studentsMeritListF);
+			 */
+			admission.add(admission1);
+			admission.add(admission2);
+			admission.add(admission3);
+			admission.add(admission4);
+			admission.add(admission5);
+			admission.add(admission6);
+
 		}
 		System.out.println(admission);
-		
+
 		return admission;
 	}
 
 }
+
